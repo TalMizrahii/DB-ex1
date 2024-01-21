@@ -21,7 +21,7 @@ cursor = mydb.cursor()
 cursor.execute("""
     SELECT SUM(x.total_cases) - SUM(y.total_cases)
     FROM covid_deaths AS x, covid_deaths AS y
-    WHERE MONTH(x.date)=2 AND MONTH(y.date) = 3
+    WHERE MONTH(x.date)=2 AND MONTH(y.date)=3
     ;""")
 # (Decimal('19882294343775'),)
 
