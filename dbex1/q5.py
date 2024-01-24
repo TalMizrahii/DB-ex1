@@ -20,6 +20,7 @@ cursor.execute("""
                     LIMIT 1)
         AND x.new_cases > 3
     ;""")
+
 #(Decimal('183266920'),)
 
 print(', '.join(str(row) for row in cursor.fetchall()))

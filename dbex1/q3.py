@@ -11,20 +11,15 @@ if __name__ == '__main__':
 cursor = mydb.cursor()
 
 cursor.execute("""
-    SELECT AVG(y.new_tests)
-    FROM (
-        SELECT date, AVG(positive_rate) AS day_avg
-        FROM covid_vaccination
-        WHERE new_tests <> '' AND positive_rate <> ''
-        GROUP BY date
-    ) AS x,
-    covid_vaccination AS y
-    WHERE y.new_tests <> ''
-        AND y.positive_rate <> ''
-        AND y.date = x.date
-        AND y.positive_rate > x.day_avg
+    SELECT AVG(new_tests)
+    FROM covid_vaccination AS x
+    WHERE new_tests <> ''
+        AND positive_rate <> ''
+        AND positive_rate > (SELECT AVG(positive_rate) 
+                                FROM covid_vaccination AS y
+                                WHERE new_tests <> '' AND positive_rate <> '')
     ;""")
 
-# (Decimal('28727.4124'),)
+# (Decimal('33455.7899'),)
 
 print(', '.join(str(row) for row in cursor.fetchall()))
