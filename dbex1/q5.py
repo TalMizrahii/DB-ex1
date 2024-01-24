@@ -9,14 +9,17 @@ if __name__ == '__main__':
         port='3307',
     )
 cursor = mydb.cursor()
-# I assume the MONTH checks all valid date formats.
-cursor.execute("""
-    SELECT SUM(x.total_cases) - SUM(y.total_cases)
-    FROM covid_deaths AS x, covid_deaths AS y
-    WHERE MONTH(x.date) = 2 OR MONTH(y.date) = 3
-    ;""")
 
-# (Decimal('19882294343775'),) total_cases
-# (Decimal('29012597079'),) new_cases
+cursor.execute("""
+    SELECT SUM(x.new_cases)
+    FROM covid_deaths AS x
+    WHERE location = (SELECT y.location
+                    FROM covid_deaths AS y
+                    GROUP BY y.location
+                    ORDER BY MAX(y.population) DESC
+                    LIMIT 1)
+        AND x.new_cases > 3
+    ;""")
+#(Decimal('183266920'),)
 
 print(', '.join(str(row) for row in cursor.fetchall()))
