@@ -27,4 +27,4 @@ cursor.execute("""
 
 # (Decimal('28727.4124'),)
 
-print(', \n'.join(str(row) for row in cursor.fetchall()))
+print(', '.join(str(row) for row in cursor.fetchall()))
