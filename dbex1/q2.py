@@ -15,13 +15,14 @@ cursor.execute("""
         FROM (
             SELECT date, new_cases, location
             FROM covid_deaths
-            WHERE new_cases > 1000
+            LIMIT 1000
         ) AS x, (
-            SELECT date, location, new_cases
+            SELECT date, new_cases, location
             FROM covid_deaths
-            WHERE new_cases > 1000
+            LIMIT 1000
         ) AS y
         WHERE x.date = y.date
+            AND x.new_cases > 1000
             AND x.new_cases = y.new_cases
             AND x.location < y.location
     ;""")

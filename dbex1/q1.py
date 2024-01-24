@@ -19,10 +19,11 @@ cursor = mydb.cursor()
 
 
 cursor.execute("""
-    SELECT SUM(x.total_cases) - SUM(y.total_cases)
+    SELECT SUM(x.new_cases) - SUM(y.new_cases)
     FROM covid_deaths AS x, covid_deaths AS y
     WHERE MONTH(x.date)=2 AND MONTH(y.date)=3
     ;""")
-# (Decimal('19882294343775'),)
+# (Decimal('19882294343775'),) total_cases
+# (Decimal('29012597079'),) new_cases
 
 print(', '.join(str(row) for row in cursor.fetchall()))
