@@ -10,6 +10,7 @@ if __name__ == '__main__':
     )
 cursor = mydb.cursor()
 
+# The assumption is that the average ON DAYS is not addressed to the daily average, but to the total average.
 cursor.execute("""
     SELECT AVG(new_tests)
     FROM covid_vaccination AS x
