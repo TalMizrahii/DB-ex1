@@ -12,7 +12,7 @@ cursor = mydb.cursor()
 
 # We consider that the limitation of 1000 rows are from the original table, not from the query's result.
 cursor.execute("""
-        SELECT x.date, x.new_cases, x.location
+        SELECT x.date, x.new_cases, x.location, y.location
         FROM (
             SELECT date, new_cases, location
             FROM covid_deaths
