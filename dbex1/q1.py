@@ -21,12 +21,12 @@ cursor = mydb.cursor()
 #     ;""")
 
 cursor.execute("""
-SELECT 
-    (SELECT SUM(new_cases) 
-     FROM covid_deaths
-     WHERE MONTH(date) = 2) - (SELECT SUM(new_cases) 
-                               FROM covid_deaths 
-                               WHERE MONTH(date) = 3)
+    SELECT 
+        (SELECT SUM(new_cases) 
+         FROM covid_deaths
+         WHERE MONTH(date) = 2) - (SELECT SUM(new_cases) 
+                                   FROM covid_deaths 
+                                   WHERE MONTH(date) = 3)
     ;""")
 
 print(', '.join(str(row) for row in cursor.fetchall()))
