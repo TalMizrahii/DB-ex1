@@ -28,6 +28,5 @@ cursor.execute("""
             AND x.location < y.location
     ;""")
 
-# Empty
 
 print(', '.join(str(row) for row in cursor.fetchall()))

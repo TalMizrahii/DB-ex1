@@ -21,6 +21,4 @@ cursor.execute("""
                                 WHERE new_tests <> '' AND positive_rate <> '')
     ;""")
 
-# (Decimal('33455.7899'),)
-
 print(', '.join(str(row) for row in cursor.fetchall()))

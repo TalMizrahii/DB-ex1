@@ -22,6 +22,5 @@ cursor.execute("""
             FROM covid_db.covid_deaths))
      ;""")
 
-# ('',), ('Asia',), ('Europe',), ('North America',), ('South America',)
 
 print(', '.join(str(row) for row in cursor.fetchall()))
