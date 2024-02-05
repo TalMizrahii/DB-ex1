@@ -11,21 +11,21 @@ if __name__ == '__main__':
 cursor = mydb.cursor()
 
 cursor.execute("""
-    SELECT SUM(x.new_cases)
-    FROM covid_deaths AS x
-    WHERE x.location = (
-        SELECT y.location
-        FROM covid_deaths AS y
-        GROUP BY y.location
-        ORDER BY MAX(y.population) DESC
-        LIMIT 1
-    )
-    AND x.location IN (
+    SELECT SUM(new_cases)
+    FROM covid_deaths AS result
+    WHERE result.location IN (
         SELECT z.location
         FROM covid_deaths AS z
         GROUP BY z.location
         HAVING AVG(z.new_cases) > 3
-    )
+    ) AND result.location IN (
+        SELECT x.location
+        FROM covid_deaths AS x,
+            (SELECT date, MAX(population) AS maxP
+                FROM covid_deaths AS c
+                GROUP BY date
+            ) AS y
+        WHERE x.date = y.date AND y.maxP = x.population)
     ;""")
 
 
